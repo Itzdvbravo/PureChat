@@ -449,7 +449,7 @@ class PureChat extends PluginBase
     {
         // TODO
         $string = str_replace("{display_name}", $player->getDisplayName(), $string);
-
+        $pg = Server::getInstance()->getPluginManager()->getPlugin("BravoClan");
         if($message === null)
             $message = "";
 
@@ -472,7 +472,10 @@ class PureChat extends PluginBase
             $string = str_replace("{fac_name}", '', $string);
             $string = str_replace("{fac_rank}", '', $string);
         }
-
+        if ($pg !== null)
+        {
+            $string = str_replace("{clan}", $pg->scorehudAddon($player->getName()), $string);
+        }    
         $string = str_replace("{world}", ($levelName === null ? "" : $levelName), $string);
 
         $string = str_replace("{prefix}", $this->getPrefix($player, $levelName), $string);
